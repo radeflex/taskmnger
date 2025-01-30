@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:controller="taskmanager.ui.AddTaskController" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="199.0" prefWidth="336.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="199.0" prefWidth="243.0">
+         <children>
+            <Label style="-fx-padding: 10;" text="Add new task">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="62.0" prefWidth="603.0" spacing="10.0">
+               <children>
+                  <Label text="Description: " />
+                  <TextField fx:id="descField" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="57.0" prefHeight="62.0" prefWidth="603.0" spacing="40.0">
+               <children>
+                  <Label text="Status: " />
+                  <ChoiceBox fx:id="statusField" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="81.0" prefWidth="336.0">
+               <children>
+                  <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmAction" text="Confirm" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</VBox>
