@@ -3,6 +3,7 @@ package taskmanager.ui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
@@ -26,7 +27,7 @@ public class AddTaskController {
         try {
             Task task = new Task(desc, status);
             TaskBoard.add(task);
-            MainViewController mainViewController = new MainViewController();
+            MainViewController mainViewController = new FXMLLoader(getClass().getResource("view.fxml")).getController();
             mainViewController.addNewTask(task);
         } catch (RuntimeException e) {
             e.printStackTrace();
