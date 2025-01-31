@@ -1,6 +1,7 @@
 package taskmanager.ui;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.FlowPane;
 
 import javafx.scene.layout.VBox;
@@ -16,13 +17,17 @@ public class MainViewController {
     @FXML
     private FlowPane doneBox;
 
+    private AddTaskWindow addTaskWindow;
+
     @FXML
     private void addTaskAction() {
-        AddTaskWindow.show();
+        AddTaskController.setMainViewController(this);
+        addTaskWindow.show();
     }
 
     @FXML
     public void initialize() {
+        addTaskWindow = AddTaskWindow.getInstance();
         TaskBoard.getTaskListByStatus(Status.TODO)
                 .forEach(t -> todoBox.getChildren().add(TaskUI.createTask(t)));
         TaskBoard.getTaskListByStatus(Status.IN_PROGRESS)

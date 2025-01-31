@@ -8,14 +8,24 @@ import javafx.scene.Scene;
 import java.io.IOException;
 
 public class AddTaskWindow {
+    private static AddTaskWindow addTaskWindow;
+    private final Stage stage;
 
-    private static final Stage stage = new Stage();
-
-    public static void show() {
+    private AddTaskWindow() {
+        stage = new Stage();
         stage.setTitle("New task");
         stage.initModality(Modality.APPLICATION_MODAL);
-        FXMLLoader loader = new FXMLLoader(AddTaskWindow.class.getResource("add-task.fxml"));
+    }
 
+    public static AddTaskWindow getInstance() {
+        if (addTaskWindow == null) {
+            addTaskWindow = new AddTaskWindow();
+        }
+        return addTaskWindow;
+    }
+
+    public void show() {
+        FXMLLoader loader = new FXMLLoader(AddTaskWindow.class.getResource("add-task.fxml"));
         try {
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
@@ -25,7 +35,7 @@ public class AddTaskWindow {
         }
     }
 
-    public static void close() {
+    public void close() {
         stage.close();
     }
 }
