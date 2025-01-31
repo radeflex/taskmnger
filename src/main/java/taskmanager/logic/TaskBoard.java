@@ -20,7 +20,7 @@ public class TaskBoard {
     }
 
     public static void add(Task task) throws RuntimeException {
-        if (taskList.size() > 6) {
+        if (taskList.size() == 6) {
             throw new RuntimeException("You cannot have more than 6 tasks simultaneously");
         }
         TaskTable.add(task);
