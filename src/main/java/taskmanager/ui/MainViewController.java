@@ -29,15 +29,15 @@ public class MainViewController {
     public void initialize() {
         addTaskWindow = AddTaskWindow.getInstance();
         TaskBoard.getTaskListByStatus(Status.TODO)
-                .forEach(t -> todoBox.getChildren().add(TaskUI.createTask(t)));
+                .forEach(t -> todoBox.getChildren().add(TaskUIFactory.createTaskUI(t)));
         TaskBoard.getTaskListByStatus(Status.IN_PROGRESS)
-                .forEach(t -> inProgressBox.getChildren().add(TaskUI.createTask(t)));
+                .forEach(t -> inProgressBox.getChildren().add(TaskUIFactory.createTaskUI(t)));
         TaskBoard.getTaskListByStatus(Status.DONE)
-                .forEach(t -> doneBox.getChildren().add(TaskUI.createTask(t)));
+                .forEach(t -> doneBox.getChildren().add(TaskUIFactory.createTaskUI(t)));
     }
 
     public void addNewTask(Task task) {
-        VBox taskUI = TaskUI.createTask(task);
+        VBox taskUI = TaskUIFactory.createTaskUI(task);
         switch (task.getStatus()) {
             case TODO:
                 todoBox.getChildren().add(taskUI);
