@@ -1,11 +1,14 @@
 package taskmanager.ui;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
+import javafx.stage.Modality;
 import taskmanager.logic.Status;
 import taskmanager.logic.TaskBoard;
 import taskmanager.logic.Task;
@@ -26,14 +29,19 @@ public class AddTaskController {
     private void confirmAction() {
         String desc = descField.getText();
         Status status = Status.valueOf(statusField.getValue());
+        addTaskWindow.close();
         try {
             Task task = new Task(desc, status);
             TaskBoard.add(task);
             mainViewController.addNewTask(task);
         } catch (RuntimeException e) {
-            e.printStackTrace();
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.initModality(Modality.APPLICATION_MODAL);
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            });
         }
-        addTaskWindow.close();
     }
 
     @FXML
