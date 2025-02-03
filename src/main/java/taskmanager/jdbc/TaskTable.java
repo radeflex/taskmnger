@@ -38,9 +38,9 @@ public class TaskTable {
         }
     }
 
-    public static void remove(String taskName) {
+    public static void remove(Task task) {
         try (PreparedStatement stmt = DBUtils.getConnection().prepareStatement(DEL_TASK)) {
-            stmt.setString(1, taskName);
+            stmt.setString(1, task.getDesc());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
