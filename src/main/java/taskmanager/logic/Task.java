@@ -44,7 +44,7 @@ public class Task {
     public boolean equals(Object o) {
         if (!(o instanceof Task)) return false;
         Task task = (Task) o;
-        return Objects.equals(desc, task.desc) && status == task.status && Objects.equals(dateAdded, task.dateAdded);
+        return Objects.equals(desc, task.desc);
     }
 
     @Override
