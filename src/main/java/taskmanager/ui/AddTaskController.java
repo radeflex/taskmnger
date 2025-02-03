@@ -8,6 +8,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import taskmanager.logic.Status;
 import taskmanager.logic.TaskBoard;
@@ -21,6 +23,8 @@ public class AddTaskController {
     private TextField descField;
     @FXML
     private ChoiceBox<String> statusField;
+    @FXML
+    private VBox newTaskWindow;
 
     private AddTaskWindow addTaskWindow;
     private static MainViewController mainViewController;
@@ -50,6 +54,12 @@ public class AddTaskController {
         ObservableList<String> statusValues = FXCollections.observableList(Arrays.stream(Status.values()).map(Status::toString).collect(Collectors.toList()));
         statusField.setItems(statusValues);
         statusField.setValue(statusValues.get(0));
+
+        newTaskWindow.setOnKeyPressed(e -> {
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                confirmAction();
+            }
+        });
     }
 
     public static void setMainViewController(MainViewController controller) {
