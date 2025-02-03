@@ -1,22 +1,22 @@
 package taskmanager.ui;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.FlowPane;
 
 import javafx.scene.layout.VBox;
-import taskmanager.logic.Status;
 import taskmanager.logic.Task;
 import taskmanager.logic.TaskBoard;
 
+import java.util.*;
+
 public class MainViewController {
     @FXML
-    private FlowPane todoBox;
+    private VBox todoBox;
     @FXML
-    private FlowPane inProgressBox;
+    private VBox inProgressBox;
     @FXML
-    private FlowPane doneBox;
+    private VBox doneBox;
 
+    private Map<Task, VBox> taskUIs;
     private AddTaskWindow addTaskWindow;
 
     @FXML
@@ -27,27 +27,39 @@ public class MainViewController {
 
     @FXML
     public void initialize() {
+        List<Task> taskLists = TaskBoard.getTaskList();
         addTaskWindow = AddTaskWindow.getInstance();
-        TaskBoard.getTaskListByStatus(Status.TODO)
-                .forEach(t -> todoBox.getChildren().add(TaskUIFactory.createTaskUI(t)));
-        TaskBoard.getTaskListByStatus(Status.IN_PROGRESS)
-                .forEach(t -> inProgressBox.getChildren().add(TaskUIFactory.createTaskUI(t)));
-        TaskBoard.getTaskListByStatus(Status.DONE)
-                .forEach(t -> doneBox.getChildren().add(TaskUIFactory.createTaskUI(t)));
+        taskUIs = new HashMap<>();
+
+        taskLists.forEach(t -> {
+            VBox taskUI = TaskUIFactory.createTaskUI(t, this);
+            taskUIs.put(t, taskUI);
+            getTaskBox(t).getChildren().add(taskUI);
+        });
+    }
+
+    private VBox getTaskBox(Task task) {
+        VBox choice = null;
+        switch (task.getStatus()) {
+            case TODO:
+                choice = todoBox;
+                break;
+            case IN_PROGRESS:
+                choice = inProgressBox;
+                break;
+            case DONE:
+                choice = doneBox;
+        }
+        return choice;
     }
 
     public void addNewTask(Task task) {
-        VBox taskUI = TaskUIFactory.createTaskUI(task);
-        switch (task.getStatus()) {
-            case TODO:
-                todoBox.getChildren().add(taskUI);
-                break;
-            case IN_PROGRESS:
-                inProgressBox.getChildren().add(taskUI);
-                break;
-            case DONE:
-                doneBox.getChildren().add(taskUI);
-                break;
-        }
+        VBox taskUI = TaskUIFactory.createTaskUI(task, this);
+        getTaskBox(task).getChildren().add(taskUI);
+        taskUIs.put(task, taskUI);
+    }
+
+    public void removeTask(Task task) {
+        getTaskBox(task).getChildren().remove(taskUIs.remove(task));
     }
 }
