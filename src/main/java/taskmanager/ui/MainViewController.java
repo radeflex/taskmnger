@@ -3,6 +3,7 @@ package taskmanager.ui;
 import javafx.fxml.FXML;
 
 import javafx.scene.layout.VBox;
+import taskmanager.logic.Status;
 import taskmanager.logic.Task;
 import taskmanager.logic.TaskBoard;
 
@@ -16,8 +17,10 @@ public class MainViewController {
     @FXML
     private VBox doneBox;
 
-    private Map<Task, VBox> taskUIs;
+    private Map<Status, VBox> statusBoxes;
+    private Map<Task, TaskUI> taskUIs;
     private AddTaskWindow addTaskWindow;
+    private TaskUIFactory taskUIFactory;
 
     @FXML
     private void addTaskAction() {
@@ -27,39 +30,33 @@ public class MainViewController {
 
     @FXML
     public void initialize() {
-        List<Task> taskLists = TaskBoard.getTaskList();
+        List<Task> taskList = TaskBoard.getTaskList();
         addTaskWindow = AddTaskWindow.getInstance();
         taskUIs = new HashMap<>();
+        taskUIFactory = new TaskUIFactory(this);
+        statusBoxes = Map.of(Status.TODO, todoBox, Status.IN_PROGRESS, inProgressBox, Status.DONE, doneBox);
 
-        taskLists.forEach(t -> {
-            VBox taskUI = TaskUIFactory.createTaskUI(t, this);
-            taskUIs.put(t, taskUI);
-            getTaskBox(t).getChildren().add(taskUI);
+        taskList.forEach(task -> {
+            TaskUI taskUI = taskUIFactory.createTaskUI(task);
+            taskUIs.put(task, taskUI);
+            statusBoxes.get(task.getStatus()).getChildren().add(taskUI);
         });
     }
 
-    private VBox getTaskBox(Task task) {
-        VBox choice = null;
-        switch (task.getStatus()) {
-            case TODO:
-                choice = todoBox;
-                break;
-            case IN_PROGRESS:
-                choice = inProgressBox;
-                break;
-            case DONE:
-                choice = doneBox;
-        }
-        return choice;
-    }
-
     public void addNewTask(Task task) {
-        VBox taskUI = TaskUIFactory.createTaskUI(task, this);
-        getTaskBox(task).getChildren().add(taskUI);
+        TaskUI taskUI = taskUIFactory.createTaskUI(task);
+        statusBoxes.get(task.getStatus()).getChildren().add(taskUI);
         taskUIs.put(task, taskUI);
     }
 
+    public void updateTask(Task task, Status status) {
+        TaskUI taskUI = taskUIs.get(task);
+        statusBoxes.get(task.getStatus()).getChildren().remove(taskUI);
+        task.setStatus(status);
+        statusBoxes.get(task.getStatus()).getChildren().add(taskUI);
+    }
+
     public void removeTask(Task task) {
-        getTaskBox(task).getChildren().remove(taskUIs.remove(task));
+        statusBoxes.get(task.getStatus()).getChildren().remove(taskUIs.remove(task));
     }
 }
