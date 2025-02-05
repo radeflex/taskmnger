@@ -49,7 +49,7 @@ public class Task {
 
     @Override
     public int hashCode() {
-        return Objects.hash(desc, status, dateAdded);
+        return Objects.hash(desc, dateAdded);
     }
 
     @Override
