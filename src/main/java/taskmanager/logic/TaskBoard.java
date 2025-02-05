@@ -11,12 +11,6 @@ public class TaskBoard {
         return taskList;
     }
 
-//    public static List<Task> getTaskListByStatus(Status status) {
-//        return taskList.stream()
-//                .filter(t -> t.getStatus().equals(status))
-//                .collect(Collectors.toList());
-//    }
-
     private static void validateTask(Task task) throws RuntimeException {
         if (taskList.size() == 6) {
             throw new RuntimeException("You cannot have more than 6 tasks simultaneously");
@@ -29,18 +23,16 @@ public class TaskBoard {
 
     public static void add(Task task) throws RuntimeException {
         validateTask(task);
-        TaskTable.add(task);
+        TaskTable.add(task.getDesc(), task.getStatus().ordinal(), task.getDateAdded().toString());
         taskList.add(task);
     }
 
-//    public static void update(String taskName, Status status) {
-//        Task task = findTask(taskName);
-//        TaskTable.update(taskName, status);
-//        task.setStatus(status);
-//    }
+    public static void update(Task task, Status status) {
+        TaskTable.update(task.getDesc(), status.ordinal());
+    }
 
     public static void remove(Task task) {
-        TaskTable.remove(task);
+        TaskTable.remove(task.getDesc());
         taskList.remove(task);
     }
 }
