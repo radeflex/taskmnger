@@ -1,34 +1,31 @@
 package taskmanager.ui;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-
+import taskmanager.logic.Status;
 import taskmanager.logic.Task;
 import taskmanager.logic.TaskBoard;
 
 import java.util.Optional;
 
 public class TaskUIFactory {
-    public static VBox createTaskUI(Task task, MainViewController controller) {
-        VBox vBox = new VBox();
-        vBox.setSpacing(10);
-        vBox.setPadding(new Insets(20, 20, 20, 20));
+    private final MainViewController controller;
 
-        Label taskDesc = new Label(task.getDesc());
-        Label dateAdded = new Label("added at: " + task.getDateAdded().toString());
+    public TaskUIFactory(MainViewController controller) {
+        this.controller = controller;
+    }
 
-        Button removeBtn = new Button("X");
+    private void updateTask(TaskUI taskUI, Task task, Status status) {
+        taskUI.getDemoteBtn().setDisable(status.equals(Status.TODO));
+        taskUI.getPromoteBtn().setDisable(status.equals(Status.DONE));
+        TaskBoard.update(task, status);
+        controller.updateTask(task, status);
+    }
+    
+    public TaskUI createTaskUI(Task task) {
+        TaskUI taskUI = new TaskUI(task);
 
-        HBox controlPanel = new HBox();
-        controlPanel.setSpacing(10);
-        controlPanel.getChildren().add(removeBtn);
-
-        removeBtn.setOnAction(e -> {
+        taskUI.getRemoveBtn().setOnAction(e -> {
             Optional<ButtonType> choice = AlertFactory.createAlert(Alert.AlertType.CONFIRMATION, "Do you really want to remove it?").showAndWait();
             if (choice.isPresent() && choice.get().equals(ButtonType.OK)) {
                 TaskBoard.remove(task);
@@ -36,7 +33,16 @@ public class TaskUIFactory {
             }
         });
 
-        vBox.getChildren().addAll(taskDesc, dateAdded, controlPanel);
-        return vBox;
+        taskUI.getPromoteBtn().setOnAction(e -> {
+            Status newStatus = Status.values()[task.getStatus().ordinal() + 1];
+            updateTask(taskUI, task, newStatus);
+        });
+
+        taskUI.getDemoteBtn().setOnAction(e -> {
+            Status newStatus = Status.values()[task.getStatus().ordinal() - 1];
+            updateTask(taskUI, task, newStatus);
+        });
+
+        return taskUI;
     }
 }
