@@ -23,7 +23,7 @@ public class TaskBoard {
 
     public static void add(Task task) throws RuntimeException {
         validateTask(task);
-        TaskTable.add(task.getDesc(), task.getStatus().ordinal(), task.getDateAdded().toString());
+        TaskTable.add(task.getDesc(), task.getStatus().ordinal(), task.getDateAdded().toString(), task.getOwner());
         taskList.add(task);
     }
 

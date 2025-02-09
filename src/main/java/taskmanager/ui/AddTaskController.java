@@ -27,6 +27,7 @@ public class AddTaskController {
     private VBox newTaskWindow;
 
     private AddTaskWindow addTaskWindow;
+
     private static MainViewController mainViewController;
 
     @FXML
@@ -35,7 +36,7 @@ public class AddTaskController {
         Status status = Status.valueOf(statusField.getValue());
         addTaskWindow.close();
         try {
-            Task task = new Task(desc, status);
+            Task task = new Task(desc, status, mainViewController.getCurrentUser().getUserName());
             TaskBoard.add(task);
             mainViewController.addNewTask(task);
         } catch (RuntimeException e) {

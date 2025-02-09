@@ -19,6 +19,7 @@ public class TaskUI extends VBox {
 
         Label dateAdded = new Label("added at: " + task.getDateAdded().toString());
         Label desc = new Label(task.getDesc());
+        Label owner = new Label("by " + task.getOwner());
 
         demoteBtn = new Button("<-");
         promoteBtn = new Button("->");
@@ -30,7 +31,7 @@ public class TaskUI extends VBox {
         HBox controlPanel = new HBox(demoteBtn, promoteBtn, removeBtn);
         controlPanel.setSpacing(10);
 
-        getChildren().addAll(desc, dateAdded, controlPanel);
+        getChildren().addAll(desc, owner, dateAdded, controlPanel);
     }
 
     public Button getDemoteBtn() {

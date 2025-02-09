@@ -5,27 +5,24 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Task {
-    private String desc;
+    private final String desc;
     private Status status;
     private final Timestamp dateAdded;
+    private final String owner;
 
-    public Task(String desc, Status status, Timestamp dateAdded) {
+    public Task(String desc, Status status, Timestamp dateAdded, String owner) {
         this.desc = desc;
         this.status = status;
         this.dateAdded = dateAdded;
+        this.owner = owner;
     }
 
-    public Task(String desc, Status status) {
-        this(desc, status, new Timestamp(new Date().getTime()));
+    public Task(String desc, Status status, String owner) {
+        this(desc, status, new Timestamp(new Date().getTime()), owner);
     }
-
 
     public String getDesc() {
         return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
     public Status getStatus() {
@@ -39,6 +36,8 @@ public class Task {
     public Timestamp getDateAdded() {
         return dateAdded;
     }
+
+    public String getOwner() { return owner; }
 
     @Override
     public boolean equals(Object o) {
