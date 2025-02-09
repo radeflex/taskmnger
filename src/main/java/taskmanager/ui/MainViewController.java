@@ -2,14 +2,20 @@ package taskmanager.ui;
 
 import javafx.fxml.FXML;
 
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import taskmanager.logic.Status;
 import taskmanager.logic.Task;
 import taskmanager.logic.TaskBoard;
+import taskmanager.logic.User;
 
 import java.util.*;
 
 public class MainViewController {
+    @FXML
+    private VBox root;
+    @FXML
+    private Label nickLabel;
     @FXML
     private VBox todoBox;
     @FXML
@@ -21,7 +27,14 @@ public class MainViewController {
     private Map<Task, TaskUI> taskUIs;
     private AddTaskWindow addTaskWindow;
     private TaskUIFactory taskUIFactory;
+    private User currentUser;
 
+    private static LoginController loginController;
+
+    @FXML
+    public void logOut() {
+        loginController.redirect();
+    }
     @FXML
     private void addTaskAction() {
         AddTaskController.setMainViewController(this);
@@ -41,6 +54,9 @@ public class MainViewController {
             taskUIs.put(task, taskUI);
             statusBoxes.get(task.getStatus()).getChildren().add(taskUI);
         });
+
+        LoginController.setMainViewController(this);
+        RegisterController.setMainViewController(this);
     }
 
     public void addNewTask(Task task) {
@@ -58,5 +74,22 @@ public class MainViewController {
 
     public void removeTask(Task task) {
         statusBoxes.get(task.getStatus()).getChildren().remove(taskUIs.remove(task));
+    }
+
+    public void redirect() {
+        Application.setRoot(root);
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User user) {
+        currentUser = user;
+        nickLabel.setText(currentUser.getUserName());
+    }
+
+    public static void setLoginController(LoginController controller) {
+        loginController = controller;
     }
 }

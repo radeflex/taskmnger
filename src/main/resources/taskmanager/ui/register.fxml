@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="555.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="taskmanager.ui.RegisterController">
+   <children>
+      <VBox alignment="CENTER" maxWidth="-Infinity" prefHeight="251.0" prefWidth="303.0" spacing="5.0">
+         <children>
+            <Label prefHeight="19.0" prefWidth="124.0" text="Sign up">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="144.0" prefWidth="171.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="userNameField" maxWidth="-Infinity" prefHeight="25.0" prefWidth="171.0" promptText="Enter username" />
+                  <PasswordField fx:id="passwdField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="205.0" promptText="Enter password" />
+                  <PasswordField fx:id="confPasswdField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="205.0" promptText="Confirm password" />
+                  <Label fx:id="errorLabel" prefHeight="34.0" prefWidth="171.0" wrapText="true" />
+               </children>
+            </VBox>
+            <HBox alignment="CENTER" prefHeight="19.0" prefWidth="303.0" spacing="20.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#registerUser" text="Confirm" />
+                  <Button mnemonicParsing="false" onAction="#toSignIn" text="Sign in" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</VBox>
