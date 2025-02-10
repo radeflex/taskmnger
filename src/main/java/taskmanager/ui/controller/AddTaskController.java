@@ -1,4 +1,4 @@
-package taskmanager.ui;
+package taskmanager.ui.controller;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -11,9 +11,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
-import taskmanager.logic.Status;
-import taskmanager.logic.TaskBoard;
-import taskmanager.logic.Task;
+import taskmanager.logic.TaskService;
+import taskmanager.logic.domain.Status;
+import taskmanager.logic.domain.Task;
+import taskmanager.ui.window.AddTaskWindow;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -26,6 +27,8 @@ public class AddTaskController {
     @FXML
     private VBox newTaskWindow;
 
+    private final TaskService taskService = TaskService.getInstance();
+
     private AddTaskWindow addTaskWindow;
 
     private static MainViewController mainViewController;
@@ -37,7 +40,7 @@ public class AddTaskController {
         addTaskWindow.close();
         try {
             Task task = new Task(desc, status, mainViewController.getCurrentUser().getUserName());
-            TaskBoard.add(task);
+            taskService.add(task);
             mainViewController.addNewTask(task);
         } catch (RuntimeException e) {
             Platform.runLater(() -> {

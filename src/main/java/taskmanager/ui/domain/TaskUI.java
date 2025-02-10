@@ -1,12 +1,12 @@
-package taskmanager.ui;
+package taskmanager.ui.domain;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import taskmanager.logic.Status;
-import taskmanager.logic.Task;
+import taskmanager.logic.domain.Status;
+import taskmanager.logic.domain.Task;
 
 public class TaskUI extends VBox {
     private final Button demoteBtn, promoteBtn, removeBtn;

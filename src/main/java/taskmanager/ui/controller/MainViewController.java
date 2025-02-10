@@ -1,13 +1,17 @@
-package taskmanager.ui;
+package taskmanager.ui.controller;
 
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import taskmanager.logic.Status;
-import taskmanager.logic.Task;
-import taskmanager.logic.TaskBoard;
-import taskmanager.logic.User;
+import taskmanager.logic.domain.Status;
+import taskmanager.logic.domain.Task;
+import taskmanager.logic.TaskService;
+import taskmanager.logic.domain.User;
+import taskmanager.ui.window.AddTaskWindow;
+import taskmanager.ui.Application;
+import taskmanager.ui.domain.TaskUI;
+import taskmanager.ui.factory.TaskUIFactory;
 
 import java.util.*;
 
@@ -29,6 +33,8 @@ public class MainViewController {
     private TaskUIFactory taskUIFactory;
     private User currentUser;
 
+    private final TaskService taskService = TaskService.getInstance();
+
     private static LoginController loginController;
 
     @FXML
@@ -43,7 +49,7 @@ public class MainViewController {
 
     @FXML
     public void initialize() {
-        List<Task> taskList = TaskBoard.getTaskList();
+        List<Task> taskList = taskService.getTaskList();
         addTaskWindow = AddTaskWindow.getInstance();
         taskUIs = new HashMap<>();
         taskUIFactory = new TaskUIFactory(this);

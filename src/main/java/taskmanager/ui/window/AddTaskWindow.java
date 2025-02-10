@@ -1,9 +1,10 @@
-package taskmanager.ui;
+package taskmanager.ui.window;
 
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import taskmanager.ui.Application;
 
 import java.io.IOException;
 
@@ -25,7 +26,7 @@ public class AddTaskWindow {
     }
 
     public void show() {
-        FXMLLoader loader = new FXMLLoader(AddTaskWindow.class.getResource("add-task.fxml"));
+        FXMLLoader loader = new FXMLLoader(Application.class.getResource("add-task.fxml"));
         try {
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);

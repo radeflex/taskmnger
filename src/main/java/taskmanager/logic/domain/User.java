@@ -1,4 +1,4 @@
-package taskmanager.logic;
+package taskmanager.logic.domain;
 
 import java.util.Objects;
 
@@ -10,6 +10,14 @@ public class User {
     private String fullName;
     private String email;
     private String github;
+
+    public User(String userName, String passwordHash, String fullName, String email, String github) {
+        this.userName = userName;
+        this.passwordHash = passwordHash;
+        this.fullName = fullName;
+        this.email = email;
+        this.github = github;
+    }
 
     public User(String userName, String password) {
         this.userName = userName;

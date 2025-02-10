@@ -1,4 +1,4 @@
-package taskmanager.ui;
+package taskmanager.ui.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -6,8 +6,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
-import taskmanager.logic.User;
-import taskmanager.logic.UserStorage;
+import taskmanager.logic.domain.User;
+import taskmanager.logic.UserService;
+import taskmanager.ui.Application;
 
 public class RegisterController {
     @FXML
@@ -20,6 +21,8 @@ public class RegisterController {
     private PasswordField confPasswdField;
     @FXML
     private Label errorLabel;
+
+    private final UserService userService = UserService.getInstance();
 
     private static LoginController loginController;
     private static MainViewController mainViewController;
@@ -48,7 +51,7 @@ public class RegisterController {
 
         User user = new User(userNameField.getText(), passwdField.getText());
         try {
-            UserStorage.add(user);
+            userService.add(user);
         } catch (RuntimeException e) {
             errorLabel.setText(e.getMessage());
             return;

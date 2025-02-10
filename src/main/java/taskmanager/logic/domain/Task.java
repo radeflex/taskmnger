@@ -1,4 +1,4 @@
-package taskmanager.logic;
+package taskmanager.logic.domain;
 
 import java.sql.Timestamp;
 import java.util.Date;
